@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Scan</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #050505;
+    color: #ff2b2b;
+    font-family: Consolas, monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .box {
+    width: min(90%, 650px);
+    border: 1px solid #ff2b2b;
+    padding: 25px;
+    box-shadow: 0 0 30px #ff000044;
+  }
+  h1 { margin-top: 0; }
+  #terminal {
+    height: 220px;
+    overflow: hidden;
+    color: #ddd;
+    line-height: 1.6;
+  }
+  .bar {
+    height: 18px;
+    border: 1px solid #ff2b2b;
+    margin-top: 20px;
+  }
+  #progress {
+    height: 100%;
+    width: 0%;
+    background: #ff2b2b;
+  }
+  #percent { margin-top: 8px; }
+  .blink { animation: blink .7s infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+</head>
+
+<body>
+<div class="box">
+  <h1>⚠ SYSTEM ALERT</h1>
+  <div id="terminal"></div>
+
+  <div class="bar">
+    <div id="progress"></div>
+  </div>
+
+  <div id="percent">Scanning... 0%</div>
+  <p class="blink">DO NOT CLOSE THIS WINDOW_</p>
+</div>
+
+<script>
+const terminal = document.getElementById("terminal");
+const progress = document.getElementById("progress");
+const percent = document.getElementById("percent");
+
+const messages = [
+  "[SYSTEM] Initializing security scan...",
+  "[SCAN] Checking system files...",
+  "[SCAN] Checking browser storage...",
+  "[WARNING] Suspicious activity detected...",
+  "[SCAN] Analyzing processes...",
+  "[WARNING] Unknown signature detected...",
+  "[SYSTEM] Running final diagnostics..."
+];
+
+let i = 0;
+
+function addMessage() {
+  if (i < messages.length) {
+    terminal.innerHTML += messages[i] + "<br>";
+    i++;
+    setTimeout(addMessage, 700);
+  }
+}
+
+addMessage();
+
+let value = 0;
+
+const scan = setInterval(() => {
+  value += Math.floor(Math.random() * 4) + 1;
+
+  if (value >= 100) {
+    value = 100;
+    clearInterval(scan);
+
+    setTimeout(() => {
+      document.querySelector(".box").innerHTML = `
+        <h1 style="color:#36ff65">✓ SCAN COMPLETE</h1>
+        <h2 style="color:white">PRANK 😹</h2>
+        <p style="color:#aaa">
+          Tenang. Ini cuma simulasi halaman web.
+          Tidak ada file atau perangkat yang diubah.
+        </p>
+      `;
+    }, 800);
+  }
+
+  progress.style.width = value + "%";
+  percent.textContent = "Scanning... " + value + "%";
+}, 150);
+</script>
+</body>
+</html>
